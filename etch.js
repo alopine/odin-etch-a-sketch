@@ -1,6 +1,8 @@
-// Initialize default grid size
+// Initialize default grid size and color mode
 let gridSize = 256;
 let gridLength = 16;
+const modeButton = document.querySelector("#mode");
+let colorMode = 0;
 
 // Select container and cells
 const container = document.querySelector("#container");
@@ -20,7 +22,11 @@ function addCells() {
     // Logic for changing cell colors on mouseover
     cells.forEach((cell) => {
         cell.addEventListener("mouseover", (event) => {
-            event.target.style.backgroundColor = "black";
+            if (colorMode === 0) {
+                event.target.style.backgroundColor = "black";
+            } else if (colorMode === 1) {
+                event.target.style.backgroundColor = `rgb(${randomRGB()}, ${randomRGB()}, ${randomRGB()})`;
+            }
         });
     });
 }
@@ -55,6 +61,23 @@ function createGrid() {
 
     // Add grid cells to container
     addCells();
+}
+
+// Logic for changing color mode
+modeButton.addEventListener("click", () => {
+    if (colorMode === 0) {
+        modeButton.textContent = "Color";
+        colorMode = 1;
+        
+    } else if (colorMode === 1) {
+        modeButton.textContent = "B&W";
+        colorMode = 0;
+    }
+});
+
+// Function to generate random RGB number
+function randomRGB() {
+    return Math.floor(Math.random() * 256);
 }
 
 // Populate grid
